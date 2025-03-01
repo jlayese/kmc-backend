@@ -32,34 +32,62 @@ const router = express.Router();
  *               - lastName
  *               - email
  *               - password
+ *               - confirmPassword
  *               - contactNumber
  *             properties:
  *               firstName:
  *                 type: string
- *                 example: John
+ *                 minLength: 2
+ *                 example: "John"
  *               lastName:
  *                 type: string
- *                 example: Doe
+ *                 minLength: 2
+ *                 example: "Doe"
  *               email:
  *                 type: string
  *                 format: email
- *                 example: john.doe@example.com
+ *                 example: "john.doe@example.com"
  *               password:
  *                 type: string
  *                 format: password
+ *                 minLength: 6
+ *                 example: "mypassword123"
+ *               confirmPassword:
+ *                 type: string
+ *                 format: password
+ *                 minLength: 6
  *                 example: "mypassword123"
  *               contactNumber:
  *                 type: string
+ *                 minLength: 10
  *                 example: "1234567890"
- *               profilePhoto:
- *                 type: string
- *                 format: uri
- *                 example: "http://example.com/photo.jpg"
  *     responses:
  *       201:
  *         description: User registered successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "User registered successfully"
  *       400:
- *         description: Bad request (e.g., email already registered)
+ *         description: Bad request (e.g., email already registered, invalid fields)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 error:
+ *                   type: string
+ *                   example: "Email already registered"
  */
 router.post("/signup", validateSignup, authController.signup);
 

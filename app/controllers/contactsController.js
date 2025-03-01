@@ -65,7 +65,9 @@ exports.deleteContact = async (req, res) => {
 
 exports.shareContact = async (req, res) => {
   try {
+    console.log('here')
     const { contactId, userId } = req.params;
+    console.log(contactId, userId)
     const sharedContact = await contactService.shareContact(contactId, userId);
 
     res.status(200).json({

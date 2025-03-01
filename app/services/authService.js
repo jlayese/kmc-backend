@@ -9,7 +9,6 @@ const SECRET_KEY = process.env.JWT_SECRET || "your_secret_key";
 
 const signup = async (data) => {
   try {
-    console.log("data", data);
     const {
       firstName,
       lastName,
@@ -71,7 +70,6 @@ const forgotPassword = async (email) => {
     if (!user) {
       return { success: false, error: "User not found" };
     }
-    console.log(user);
     const resetToken = crypto.randomBytes(32).toString("hex");
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpires = Date.now() + 3600000;
@@ -88,7 +86,6 @@ const forgotPassword = async (email) => {
   
     return { success: true, message: "Password reset email sent" };
   } catch (error) {
-    console.log(error)
     return { success: true, message: "Unable to send email!" };
 
   }
@@ -138,7 +135,6 @@ const resetPassword = async (token, newPassword) => {
   
     return { success: true, message: "Password reset successful" };
   } catch (error) {
-    console.log(error)
     return { success: false, message: "Unable to reset password" };
   }
  

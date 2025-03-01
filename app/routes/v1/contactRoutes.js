@@ -19,7 +19,7 @@ router.use(authenticateToken);
 
 /**
  * @swagger
- * /user/{userId}:
+ * /contacts/user/{userId}:
  *   get:
  *     summary: Get contacts of a specific user
  *     tags: [Contact]
@@ -83,9 +83,9 @@ router.get(
 
 /**
  * @swagger
- * /user/{userId}/contacts:
- *   get:
- *     summary: Get contacts of a specific user
+ * /contacts/user/{userId}/create:
+ *   post:
+ *     summary: Create a new contact for a specific user
  *     tags: [Contact]
  *     security:
  *       - BearerAuth: []
@@ -95,32 +95,67 @@ router.get(
  *         required: true
  *         schema:
  *           type: string
- *         description: The ID of the user whose contacts are being retrieved
+ *         description: The ID of the user who owns the contact
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - firstName
+ *               - lastName
+ *               - email
+ *               - contactNumber
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *                 minLength: 2
+ *                 example: "John"
+ *               lastName:
+ *                 type: string
+ *                 minLength: 2
+ *                 example: "Doe"
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: "john.doe@example.com"
+ *               contactNumber:
+ *                 type: string
+ *                 minLength: 10
+ *                 example: "1234567890"
+ *               profilePhoto:
+ *                 type: string
+ *                 format: uri
+ *                 example: "http://example.com/photo.jpg"
+ *                 nullable: true
  *     responses:
- *       200:
- *         description: List of contacts retrieved successfully
+ *       201:
+ *         description: Contact created successfully
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   firstName:
- *                     type: string
- *                     example: ""
- *                   lastName:
- *                     type: string
- *                     example: ""
- *                   email:
- *                     type: string
- *                     example: ""
- *                   contactNumber:
- *                     type: string
- *                     example: ""
- *                   profilePhoto:
- *                     type: string
- *                     example: ""
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Contact created successfully"
+ *       400:
+ *         description: Bad request (e.g., missing fields, invalid input)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 error:
+ *                   type: string
+ *                   example: "Invalid email format"
  *       401:
  *         description: Unauthorized, missing or invalid token
  *       403:
@@ -132,7 +167,7 @@ router.post("/user/:userId/create", authorizeRoles("user"), createContact);
 
 /**
  * @swagger
- * /user/{userId}/contact/{contactId}:
+ * /contacts/user/{userId}/contact/{contactId}:
  *   delete:
  *     summary: Delete a specific contact for a user
  *     tags: [Contact]
@@ -185,7 +220,7 @@ router.delete(
 
 /**
  * @swagger
- * /user/{userId}/contact/{contactId}:
+ * /contacts/user/{userId}/contact/{contactId}:
  *   put:
  *     summary: Update a contact
  *     description: Updates a user's contact details. Requires authentication.
@@ -261,7 +296,7 @@ router.put(
 
 /**
  * @swagger
- * /contact/{contactId}/share/{userId}:
+ * /contacts/{contactId}/share/{userId}:
  *   post:
  *     summary: Share a contact with another user
  *     description: Allows a user to share a contact with another user. Requires authentication.
@@ -305,14 +340,14 @@ router.put(
  *         description: Internal server error
  */
 router.post(
-    "/contact/:contactId/share/:userId",
+    "/:contactId/share/:userId",
     authorizeRoles("admin", "super-admin", "user"),
     shareContact
   );
   
   /**
    * @swagger
-   * /contact/{contactId}/unshare/{userId}:
+   * /contacts/{contactId}/unshare/{userId}:
    *   post:
    *     summary: Unshare a contact from another user
    *     description: Allows a user to unshare a previously shared contact. Requires authentication.
@@ -356,7 +391,7 @@ router.post(
    *         description: Internal server error
    */
   router.post(
-    "/contact/:contactId/unshare/:userId",
+    "/:contactId/unshare/:userId",
     authorizeRoles("admin", "super-admin", "user"),
     unshareContact
   );

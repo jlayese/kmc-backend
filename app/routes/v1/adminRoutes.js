@@ -63,7 +63,7 @@ router.use(authenticateToken);
  *       400:
  *         description: Bad request
  */
-router.post("/users/create", createUser);
+router.post("/users/create",  authorizeRoles("admin", "super-admin"), createUser);
 
 /**
  * @swagger

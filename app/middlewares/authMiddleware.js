@@ -30,13 +30,9 @@ const signinSchema = z.object({
 
 const validateSignup = async (req, res, next) => {
   try {
-    console.log("Signup Validation - Request Body:", req.body);
-
     req.body = signupSchema.parse(req.body);
 
     const existingUser = await User.findOne({ email: req.body.email });
-
-    console.log(existingUser);
 
     if (existingUser) {
       return res
@@ -110,11 +106,11 @@ const authenticateToken = async (req, res, next) => {
         .status(401)
         .json({ success: false, message: "Unauthorized: Invalid token" });
     }
+    console.log('authenticateToken ', req.user)
 
-    console.log(req.user);
     next();
   } catch (err) {
-    console.log(err);
+    console.log(err)
     res
       .status(401)
       .json({ success: false, message: "Unauthorized: Invalid token" });

@@ -15,10 +15,10 @@ router.use(authenticateToken);
 
 /**
  * @swagger
- * /user/{userId}:
+ * /users/user/:userId/other-users:
  *   get:
- *     summary: Get contacts of a specific user
- *     tags: [Contact]
+ *     summary: Get users withou shared contacts yet
+ *     tags: [User]
  *     security:
  *       - BearerAuth: []
  *     parameters:

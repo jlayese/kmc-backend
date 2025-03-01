@@ -30,12 +30,7 @@ const signin = async (req) => {
   try {
     const { body: {email, password}, userData } = req;
 
-    console.log('signin', email, password)
-    console.log('user data', userData )
-  
-
     const isMatch = await userData.comparePassword(password);
-    console.log(isMatch)
     if (!isMatch) return { success: false, error: 'Invalid credentials' };
 
     const token = jwt.sign({ id: userData._id, email: userData.email }, SECRET_KEY, { expiresIn: '1h' });

@@ -29,7 +29,6 @@ const signin = async (req, res) => {
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    console.log(email);
     const result = await authService.forgotPassword(email);
     res.status(result.success ? 200 : 400).json({
       success: result.success,
