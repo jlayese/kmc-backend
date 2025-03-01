@@ -1,6 +1,6 @@
 # Phonebook Management System - Backend API
 
-This is the backend API for the **Phonebook Management System**, built with **Node.js, Express.js, MongoDB, and MySQL**. It handles user authentication, phonebook management, and contact sharing.
+This is the backend API for the **Phonebook Management System**, built with **Node.js, Express.js, and MongoDB**. It handles user authentication, phonebook management, and contact sharing.
 
 ## 🚀 Features
 
