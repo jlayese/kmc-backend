@@ -136,12 +136,12 @@ router.post("/forgot-password", authController.forgotPassword);
  *             type: object
  *             required:
  *               - token
- *               - newPassword
+ *               - password
  *             properties:
  *               token:
  *                 type: string
  *                 example: "jwt_token_here"
- *               newPassword:
+ *               password:
  *                 type: string
  *                 format: password
  *                 example: "newpassword123"

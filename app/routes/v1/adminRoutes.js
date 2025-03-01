@@ -9,10 +9,6 @@ const {
   authenticateToken,
   authorizeRoles,
 } = require("../../middlewares/authMiddleware");
-const {
-  getContacts,
-  createContact
-} = require("../../controllers/contactsController");
 
 const router = express.Router();
 

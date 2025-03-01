@@ -31,23 +31,6 @@ exports.getContacts = async (req, res) => {
   }
 };
 
-// exports.getContactById = async (req, res) => {
-//   try {
-//     const contact = await contactService.getContactById(
-//       req.params.id,
-//       req.user.id
-//     );
-//     if (!contact) {
-//       return res
-//         .status(404)
-//         .json({ error: "Contact not found or access denied" });
-//     }
-//     res.json(contact);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
 exports.updateContact = async (req, res) => {
   try {
     const { userId, contactId } = req.params;

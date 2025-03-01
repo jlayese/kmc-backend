@@ -1,9 +1,5 @@
 const express = require('express');
 const {
-
-
-} = require('../../controllers/userController');
-const {
   authenticateToken,
   authorizeRoles
 } = require('../../middlewares/authMiddleware');

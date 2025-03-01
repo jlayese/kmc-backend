@@ -259,16 +259,119 @@ router.put(
   updateContact
 );
 
+/**
+ * @swagger
+ * /contact/{contactId}/share/{userId}:
+ *   post:
+ *     summary: Share a contact with another user
+ *     description: Allows a user to share a contact with another user. Requires authentication.
+ *     tags: [Contact]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: contactId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the contact to be shared
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the user to share the contact with
+ *     responses:
+ *       200:
+ *         description: Contact shared successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Contact shared successfully"
+ *       400:
+ *         description: Invalid request
+ *       401:
+ *         description: Unauthorized access
+ *       404:
+ *         description: Contact or user not found
+ *       500:
+ *         description: Internal server error
+ */
 router.post(
-  "/:contactId/share/:userId",
-  authorizeRoles("admin", "super-admin", "user"),
-  shareContact
-);
+    "/contact/:contactId/share/:userId",
+    authorizeRoles("admin", "super-admin", "user"),
+    shareContact
+  );
+  
+  /**
+   * @swagger
+   * /contact/{contactId}/unshare/{userId}:
+   *   post:
+   *     summary: Unshare a contact from another user
+   *     description: Allows a user to unshare a previously shared contact. Requires authentication.
+   *     tags: [Contact]
+   *     security:
+   *       - BearerAuth: []
+   *     parameters:
+   *       - in: path
+   *         name: contactId
+   *         required: true
+   *         schema:
+   *           type: string
+   *         description: The ID of the contact to be unshared
+   *       - in: path
+   *         name: userId
+   *         required: true
+   *         schema:
+   *           type: string
+   *         description: The ID of the user to unshare the contact from
+   *     responses:
+   *       200:
+   *         description: Contact unshared successfully
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 success:
+   *                   type: boolean
+   *                   example: true
+   *                 message:
+   *                   type: string
+   *                   example: "Contact unshared successfully"
+   *       400:
+   *         description: Invalid request
+   *       401:
+   *         description: Unauthorized access
+   *       404:
+   *         description: Contact or user not found
+   *       500:
+   *         description: Internal server error
+   */
+  router.post(
+    "/contact/:contactId/unshare/:userId",
+    authorizeRoles("admin", "super-admin", "user"),
+    unshareContact
+  );
+  
 
-router.post(
-  "/:contactId/unshare/:userId",
-  authorizeRoles("admin", "super-admin", "user"),
-  unshareContact
-);
+// router.post(
+//   "/:contactId/share/:userId",
+//   authorizeRoles("admin", "super-admin", "user"),
+//   shareContact
+// );
+
+// router.post(
+//   "/:contactId/unshare/:userId",
+//   authorizeRoles("admin", "super-admin", "user"),
+//   unshareContact
+// );
 
 module.exports = router;
