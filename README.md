@@ -1,6 +1,6 @@
 # Phonebook Management System - Backend API
 
-This is the backend API for the **Phonebook Management System**, built with **Node.js, Express.js, MongoDB, and MySQL**. It handles user authentication, phonebook management, and contact sharing.
+This is the backend API for the **Phonebook Management System**, built with **Node.js, Express.js, and MongoDB**. It handles user authentication, phonebook management, and contact sharing.
 
 ## 🚀 Features
 
@@ -15,21 +15,20 @@ This is the backend API for the **Phonebook Management System**, built with **No
   - Sync contact updates across shared users
 - **Database Handling**
   - **MongoDB**: NoSQL storage for flexible data
-  - **MySQL**: Relational database support
 
 ## 🛠️ Tech Stack
 
 - **Backend**: Node.js, Express.js
 - **Databases**: MongoDB, MySQL
 - **Authentication**: JWT (JSON Web Token)
-- **ORM**: Mongoose (MongoDB), Sequelize (MySQL)
+- **ORM**: Mongoose (MongoDB)
 
 ## 📂 Project Setup
 
 ### 1️⃣ Clone the repository
 ```sh
-git clone https://github.com/yourusername/phonebook-backend.git
-cd phonebook-backend
+git clone https://github.com/jlayese/kmc-backend.git
+cd kmc-backend
 ```
 
 ### 2️⃣ Install dependencies
@@ -55,7 +54,7 @@ S3_BUCKET_NAME=
 ```sh
 npm run dev
 ```
-Backend API will be available at **`http://localhost:5000/api`**.
+Backend API will be available at **[https://kmc-backend-v7yx.onrender.com/api-docs](https://kmc-backend-v7yx.onrender.com/api-docs)**.
 
 ## 🚀 Deployment
 The API is deployed at: **[Your Deployed API URL](#)**  
