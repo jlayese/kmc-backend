@@ -55,7 +55,7 @@ S3_BUCKET_NAME=
 ```sh
 npm run dev
 ```
-Backend API will be available at **`http://localhost:5000/api`**.
+Backend API will be available at **`https://kmc-backend-v7yx.onrender.com/api-docs`**.
 
 ## 🚀 Deployment
 The API is deployed at: **[Your Deployed API URL](#)**  
