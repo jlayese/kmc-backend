@@ -61,6 +61,8 @@ const updateUser = async (req, res) => {
         message = "User approval revoked!";
       } else if (req.body.isActive === false) {
         message = "User deactivated successfully!";
+      } else if (req.body.isDeleted === true) {
+        message = "User deleted successfully!";
       }
     }
 
