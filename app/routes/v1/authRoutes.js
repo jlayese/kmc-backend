@@ -1,6 +1,10 @@
-const express = require('express');
-const authController = require('../controllers/authController');
-const { validateSignup, validateSignin } = require('../middlewares/authMiddleware');
+const express = require("express");
+const authController = require("../../controllers/authController");
+const {
+  validateSignup,
+  validateSignin,
+  authenticateToken,
+} = require("../../middlewares/authMiddleware");
 
 const router = express.Router();
 
@@ -57,7 +61,7 @@ const router = express.Router();
  *       400:
  *         description: Bad request (e.g., email already registered)
  */
-router.post('/signup', validateSignup, authController.signup);
+router.post("/signup", validateSignup, authController.signup);
 
 /**
  * @swagger
@@ -89,7 +93,7 @@ router.post('/signup', validateSignup, authController.signup);
  *       401:
  *         description: Invalid credentials
  */
-router.post('/signin', validateSignin, authController.signin);
+router.post("/signin", validateSignin, authController.signin);
 
 /**
  * @swagger
@@ -116,7 +120,7 @@ router.post('/signin', validateSignin, authController.signin);
  *       404:
  *         description: User not found
  */
-router.post('/forgot-password', authController.forgotPassword);
+router.post("/forgot-password", authController.forgotPassword);
 
 /**
  * @swagger
@@ -147,8 +151,24 @@ router.post('/forgot-password', authController.forgotPassword);
  *       400:
  *         description: Invalid or expired token
  */
-app.post('/auth/reset-password', authController.resetPassword);
+router.post("/reset-password", authController.resetPassword);
 
-
+/**
+ * @swagger
+ * /auth/me:
+ *   get:
+ *     summary: Get authenticated user details
+ *     tags: [Authentication]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved user details
+ *       401:
+ *         description: Unauthorized, invalid token
+ *       500:
+ *         description: Internal server error
+ */
+router.get("/me", authenticateToken, authController.getMe);
 
 module.exports = router;

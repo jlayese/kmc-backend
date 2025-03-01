@@ -1,41 +1,31 @@
-const express = require('express');
+const express = require("express");
 const {
-  approveUser,
   getUsers,
   getUserById,
   updateUser,
-  deleteUser
-} = require('../controllers/userController');
+  createUser,
+} = require("../../controllers/userManagementController");
 const {
   authenticateToken,
-} = require('../middlewares/authMiddleware');
+  authorizeRoles,
+} = require("../../middlewares/authMiddleware");
+const {
+  getContacts,
+  createContact
+} = require("../../controllers/contactsController");
 
 const router = express.Router();
 
-/**
- * @swagger
- * /users:
- *   post:
- *     summary: Approve a new user
- *     tags: [Users]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: User approved successfully
- *       401:
- *         description: Unauthorized
- */
-router.post('/', authenticateToken, authorizeRoles('admin', 'super-admin'), approveUser);
+router.use(authenticateToken);
 
 /**
  * @swagger
- * /users/create:
+ * /admin/users/create:
  *   post:
  *     summary: Create a new user
- *     tags: [Users]
+ *     tags: [Admin]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -77,30 +67,30 @@ router.post('/', authenticateToken, authorizeRoles('admin', 'super-admin'), appr
  *       400:
  *         description: Bad request
  */
-router.post('/create', authenticateToken, createUser);
+router.post("/users/create", createUser);
 
 /**
  * @swagger
- * /users:
+ * /admin/users:
  *   get:
  *     summary: Get all users
- *     tags: [Users]
+ *     tags: [Admin]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: List of users retrieved successfully
  */
-router.get('/', authenticateToken, authorizeRoles('admin', 'super-admin'), getUsers);
+router.get("/users", authorizeRoles("admin", "super-admin"), getUsers);
 
 /**
  * @swagger
- * /users/{id}:
+ * /admin/users/{id}:
  *   get:
  *     summary: Get user by ID
- *     tags: [Users]
+ *     tags: [Admin]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -114,16 +104,16 @@ router.get('/', authenticateToken, authorizeRoles('admin', 'super-admin'), getUs
  *       404:
  *         description: User not found
  */
-router.get('/:id', authenticateToken, authorizeRoles('admin', 'super-admin'), getUserById);
+router.get("/users/:id", authorizeRoles("admin", "super-admin", "user"), getUserById);
 
 /**
  * @swagger
- * /users/{id}:
+ * /admin/users/{id}:
  *   put:
  *     summary: Update a user
- *     tags: [Users]
+ *     tags: [Admin]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -137,30 +127,6 @@ router.get('/:id', authenticateToken, authorizeRoles('admin', 'super-admin'), ge
  *       404:
  *         description: User not found
  */
-router.put('/:id', authenticateToken, authorizeRoles('admin', 'super-admin'), updateUser);
-
-/**
- * @swagger
- * /users/{id}:
- *   delete:
- *     summary: Delete a user
- *     tags: [Users]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: User ID
- *     responses:
- *       200:
- *         description: User deleted successfully
- *       404:
- *         description: User not found
- */
-router.delete('/:id', authenticateToken, authorizeRoles('admin', 'super-admin'), deleteUser);
-
+router.put("/users/:id", authorizeRoles("admin", "super-admin"), updateUser);
 
 module.exports = router;

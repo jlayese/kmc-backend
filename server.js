@@ -2,22 +2,28 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+
 const mongoose = require('./config/mongodb');
-const userRoutes = require('./app/routes/userRoutes');
-const authRoutes = require('./app/routes/authRoutes');
+const adminRoutesV1 = require('./app/routes/v1/adminRoutes');
+const userRoutesV1 = require('./app/routes/v1/userRoutes');
+const authRoutesV1 = require('./app/routes/v1/authRoutes');
+const contactRoutesV1 = require('./app/routes/v1/contactRoutes');
+const uploadRoutes = require('./app/helpers/upload');
 const {swaggerUi, swaggerSpec} = require('./config/swagger');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
 
 app.use(express.json());
 app.use(cors());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/users', userRoutes);
-app.use('/auth', authRoutes);
+app.use("/api/v1/images", uploadRoutes);
+app.use('/api/v1/auth', authRoutesV1);
+app.use('/api/v1/admin', adminRoutesV1);
+app.use('/api/v1/users', userRoutesV1);
+app.use('/api/v1/contacts', contactRoutesV1);
 
 
 mongoose.connection.once('open', () => {
