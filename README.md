@@ -40,14 +40,15 @@ npm install
 ### 3️⃣ Set up environment variables  
 Create a `.env` file and add:
 ```sh
-PORT=5000
-MONGO_URI=mongodb+srv://your_mongodb_uri
-MYSQL_HOST=localhost
-MYSQL_USER=root
-MYSQL_PASSWORD=yourpassword
-MYSQL_DATABASE=phonebook_db
-JWT_SECRET=your_jwt_secret
+MONGO_DB=mongodb+srv://your_mongodb_uri
 FRONTEND_URL=http://localhost:3000
+EMAIL_USER=
+EMAIL_PASS=
+JWT_SECRET=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_REGION=
+S3_BUCKET_NAME=
 ```
 
 ### 4️⃣ Run the development server
