@@ -28,8 +28,8 @@ This is the backend API for the **Phonebook Management System**, built with **No
 
 ### 1️⃣ Clone the repository
 ```sh
-git clone https://github.com/yourusername/phonebook-backend.git
-cd phonebook-backend
+git clone https://github.com/jlayese/kmc-backend.git
+cd kmc-backend
 ```
 
 ### 2️⃣ Install dependencies
