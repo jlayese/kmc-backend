@@ -15,14 +15,13 @@ This is the backend API for the **Phonebook Management System**, built with **No
   - Sync contact updates across shared users
 - **Database Handling**
   - **MongoDB**: NoSQL storage for flexible data
-  - **MySQL**: Relational database support
 
 ## 🛠️ Tech Stack
 
 - **Backend**: Node.js, Express.js
 - **Databases**: MongoDB, MySQL
 - **Authentication**: JWT (JSON Web Token)
-- **ORM**: Mongoose (MongoDB), Sequelize (MySQL)
+- **ORM**: Mongoose (MongoDB)
 
 ## 📂 Project Setup
 
