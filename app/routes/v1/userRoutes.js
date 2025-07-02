@@ -6,12 +6,11 @@ const {
 
 const {
   getContactsOtherUsers
-} = require("../../controllers/userController");
+} = require('../../controllers/userController');
 
 const router = express.Router();
 
 router.use(authenticateToken);
-
 
 /**
  * @swagger
@@ -72,11 +71,9 @@ router.use(authenticateToken);
  *         description: User not found
  */
 router.get(
-  "/user/:userId/other-users",
-  authorizeRoles("admin", "super-admin", "user"),
+  '/user/:userId/other-users',
+  authorizeRoles('admin', 'super-admin', 'user'),
   getContactsOtherUsers
 );
-
-
 
 module.exports = router;

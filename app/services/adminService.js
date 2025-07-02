@@ -1,4 +1,3 @@
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
@@ -16,7 +15,9 @@ const signup = async (data) => {
     const user = new User({ firstName, lastName, email, password, contactNumber, profilePhoto });
 
     await user.save();
-    const { password: _, ...userWithoutPassword } = user.toObject();
+    const userObject = user.toObject();
+    delete userObject.password;
+    const userWithoutPassword = userObject;
 
     return { success: true, message: 'Signup successful', user: userWithoutPassword };
   } catch (err) {
@@ -25,10 +26,9 @@ const signup = async (data) => {
   }
 };
 
-
 const signin = async (req) => {
   try {
-    const { body: {email, password}, userData } = req;
+    const { body: { password }, userData } = req;
 
     const isMatch = await userData.comparePassword(password);
     if (!isMatch) return { success: false, error: 'Invalid credentials' };
@@ -48,19 +48,20 @@ const forgotPassword = async (email) => {
     return { success: false, error: 'User not found' };
   }
 
-  const resetToken = crypto.randomBytes(32).toString('hex');
-  user.resetPasswordToken = resetToken;
-  user.resetPasswordExpires = Date.now() + 3600000; 
-  await user.save();
+  // TODO: Implement password reset functionality
+  // const resetToken = crypto.randomBytes(32).toString('hex');
+  // user.resetPasswordToken = resetToken;
+  // user.resetPasswordExpires = Date.now() + 3600000;
+  // await user.save();
 
-  const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+  // const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
 
-  await sendMail(
-    email,
-    'Password Reset Request',
-    `Click the link to reset your password: ${resetUrl}`,
-    `<p>Click <a href="${resetUrl}">here</a> to reset your password.</p>`
-  );
+  // await sendMail(
+  //   email,
+  //   'Password Reset Request',
+  //   `Click the link to reset your password: ${resetUrl}`,
+  //   `<p>Click <a href="${resetUrl}">here</a> to reset your password.</p>`
+  // );
 
   return { success: true, message: 'Password reset email sent' };
 };
@@ -89,6 +90,5 @@ const resetPassword = async (data) => {
     return { success: false, error: 'Internal Server Error' };
   }
 };
-
 
 module.exports = { signup, signin, forgotPassword, resetPassword };

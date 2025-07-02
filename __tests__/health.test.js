@@ -18,4 +18,4 @@ describe('Health Check', () => {
     expect(response.body).toHaveProperty('status', 'OK');
     expect(response.body).toHaveProperty('timestamp');
   });
-}); 
+});

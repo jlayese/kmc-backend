@@ -1,6 +1,5 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const User = require('../models/User');
-const Contact = require("../models/Contact");
 
 exports.approveUserService = async (id) => {
   return await User.findByIdAndUpdate(
@@ -15,19 +14,16 @@ exports.createUser = async (userData) => {
   return await user.save();
 };
 
-
 exports.getUsers = async () => {
-  return await User.find({ role: { $ne: "admin" }, isDeleted: false });
+  return await User.find({ role: { $ne: 'admin' }, isDeleted: false });
 };
-
-
 
 exports.getUsersWithUnsharedContacts = async (userId) => {
   return await User.aggregate([
     {
       $match: {
         _id: { $ne: new mongoose.Types.ObjectId(userId) }, // Exclude the current user
-        role: "user",
+        role: 'user',
         isDeleted: false,
         isActive: true,
         isApproved: true
@@ -35,7 +31,7 @@ exports.getUsersWithUnsharedContacts = async (userId) => {
     },
     {
       $project: {
-        password: 0 
+        password: 0
       }
     }
     // {
@@ -68,16 +64,13 @@ exports.getUsersWithUnsharedContacts = async (userId) => {
   ]);
 };
 
-
 exports.getUserById = async (id) => {
   return await User.findById(id);
 };
 
-
 exports.updateUser = async (id, userData) => {
   return await User.findByIdAndUpdate(id, userData, { new: true });
 };
-
 
 exports.deleteUser = async (id) => {
   return await User.findByIdAndDelete(id);

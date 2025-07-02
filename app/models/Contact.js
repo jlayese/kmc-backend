@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const contactSchema = new mongoose.Schema(
   {
@@ -6,20 +6,20 @@ const contactSchema = new mongoose.Schema(
     lastName: { type: String, required: true },
     contactNumber: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    profilePhoto: { type: String, default: "" },
+    profilePhoto: { type: String, default: '' },
 
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 
-    sharedUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    sharedUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
   },
   { timestamps: true }
 );
 
 contactSchema.methods.updateContact = async function (updatedData, userId) {
   if (this.owner.toString() !== userId.toString()) {
-    throw new Error("Only the owner can update this contact.");
+    throw new Error('Only the owner can update this contact.');
   }
-  
+
   Object.assign(this, updatedData);
   return this.save();
 };
@@ -36,4 +36,4 @@ contactSchema.methods.unshareWithUser = async function (userId) {
   return this.save();
 };
 
-module.exports = mongoose.model("Contact", contactSchema);
+module.exports = mongoose.model('Contact', contactSchema);
