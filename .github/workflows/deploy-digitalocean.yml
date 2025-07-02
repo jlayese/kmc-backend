@@ -1,0 +1,52 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests
+      run: npm test
+
+    - name: Test production readiness
+      run: |
+        # Final test to ensure app works in production mode
+        export NODE_ENV=production
+        export PORT=5000
+        
+        # Start app and test health endpoint
+        timeout 30s npm start &
+        sleep 10
+        curl -f http://localhost:5000/health || exit 1
+        pkill -f "node server.js"
+
+    - name: Deploy to DigitalOcean App Platform
+      run: |
+        # This step will be handled by DigitalOcean's GitHub integration
+        # You'll need to connect your repo to DigitalOcean App Platform
+        echo "Deployment will be handled by DigitalOcean App Platform"
+        echo "Make sure your repository is connected to DigitalOcean App Platform"
+        echo "The app has been tested and is ready for deployment"
+
+    - name: Notify deployment success
+      run: |
+        echo "✅ Application tested and ready for DigitalOcean deployment!"
+        echo "📊 Test results: All tests passed"
+        echo "🔧 Environment: Production ready" 
