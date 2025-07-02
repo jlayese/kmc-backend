@@ -1,10 +1,10 @@
-const express = require("express");
-const multer = require("multer");
-const multerS3 = require("multer-s3");
-const { S3Client } = require("@aws-sdk/client-s3");
+const express = require('express');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+const { S3Client } = require('@aws-sdk/client-s3');
 const {
-    authenticateToken,
-  } = require("../middlewares/authMiddleware");
+  authenticateToken
+} = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
@@ -12,8 +12,8 @@ const s3 = new S3Client({
   region: process.env.AWS_REGION,
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  },
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  }
 });
 
 const upload = multer({
@@ -28,9 +28,9 @@ const upload = multer({
       const fileName = `uploads/${timestamp}-${file.originalname}`;
       cb(null, fileName);
     },
-    contentType: multerS3.AUTO_CONTENT_TYPE,
+    contentType: multerS3.AUTO_CONTENT_TYPE
   }),
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });
 
 router.use(authenticateToken);
@@ -67,21 +67,21 @@ router.use(authenticateToken);
  *       500:
  *         description: Internal Server Error
  */
-router.post("/upload", upload.single("attachment"), async (req, res) => {
+router.post('/upload', upload.single('attachment'), async (req, res) => {
   try {
     if (!req.file) {
-      return res.status(400).json({ error: "No file uploaded" });
+      return res.status(400).json({ error: 'No file uploaded' });
     }
 
     const fileUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.file.key}`;
 
     res.json({
-      message: "File uploaded successfully",
-      fileUrl,
+      message: 'File uploaded successfully',
+      fileUrl
     });
   } catch (error) {
-    console.error("Upload Error:", error);
-    res.status(500).json({ error: "Failed to upload file" });
+    console.error('Upload Error:', error);
+    res.status(500).json({ error: 'Failed to upload file' });
   }
 });
 

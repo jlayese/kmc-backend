@@ -1,14 +1,14 @@
-const express = require("express");
+const express = require('express');
 const {
   getUsers,
   getUserById,
   updateUser,
-  createUser,
-} = require("../../controllers/userManagementController");
+  createUser
+} = require('../../controllers/userManagementController');
 const {
   authenticateToken,
-  authorizeRoles,
-} = require("../../middlewares/authMiddleware");
+  authorizeRoles
+} = require('../../middlewares/authMiddleware');
 
 const router = express.Router();
 
@@ -63,7 +63,7 @@ router.use(authenticateToken);
  *       400:
  *         description: Bad request
  */
-router.post("/users/create",  authorizeRoles("admin", "super-admin"), createUser);
+router.post('/users/create', authorizeRoles('admin', 'super-admin'), createUser);
 
 /**
  * @swagger
@@ -77,7 +77,7 @@ router.post("/users/create",  authorizeRoles("admin", "super-admin"), createUser
  *       200:
  *         description: List of users retrieved successfully
  */
-router.get("/users", authorizeRoles("admin", "super-admin"), getUsers);
+router.get('/users', authorizeRoles('admin', 'super-admin'), getUsers);
 
 /**
  * @swagger
@@ -100,7 +100,7 @@ router.get("/users", authorizeRoles("admin", "super-admin"), getUsers);
  *       404:
  *         description: User not found
  */
-router.get("/users/:id", authorizeRoles("admin", "super-admin", "user"), getUserById);
+router.get('/users/:id', authorizeRoles('admin', 'super-admin', 'user'), getUserById);
 
 /**
  * @swagger
@@ -123,6 +123,6 @@ router.get("/users/:id", authorizeRoles("admin", "super-admin", "user"), getUser
  *       404:
  *         description: User not found
  */
-router.put("/users/:id", authorizeRoles("admin", "super-admin"), updateUser);
+router.put('/users/:id', authorizeRoles('admin', 'super-admin'), updateUser);
 
 module.exports = router;

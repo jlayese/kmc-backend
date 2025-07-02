@@ -1,8 +1,8 @@
-const express = require("express");
+const express = require('express');
 const {
   authenticateToken,
-  authorizeRoles,
-} = require("../../middlewares/authMiddleware");
+  authorizeRoles
+} = require('../../middlewares/authMiddleware');
 
 const {
   getContacts,
@@ -10,8 +10,8 @@ const {
   deleteContact,
   updateContact,
   shareContact,
-  unshareContact,
-} = require("../../controllers/contactsController");
+  unshareContact
+} = require('../../controllers/contactsController');
 
 const router = express.Router();
 
@@ -76,8 +76,8 @@ router.use(authenticateToken);
  *         description: User not found
  */
 router.get(
-  "/user/:userId",
-  authorizeRoles("admin", "super-admin", "user"),
+  '/user/:userId',
+  authorizeRoles('admin', 'super-admin', 'user'),
   getContacts
 );
 
@@ -163,7 +163,7 @@ router.get(
  *       404:
  *         description: User not found
  */
-router.post("/user/:userId/create", authorizeRoles("user"), createContact);
+router.post('/user/:userId/create', authorizeRoles('user'), createContact);
 
 /**
  * @swagger
@@ -213,8 +213,8 @@ router.post("/user/:userId/create", authorizeRoles("user"), createContact);
  */
 
 router.delete(
-  "/user/:userId/contact/:contactId",
-  authorizeRoles("user"),
+  '/user/:userId/contact/:contactId',
+  authorizeRoles('user'),
   deleteContact
 );
 
@@ -289,8 +289,8 @@ router.delete(
  *         description: Internal server error
  */
 router.put(
-  "/user/:userId/contact/:contactId",
-  authorizeRoles("user"),
+  '/user/:userId/contact/:contactId',
+  authorizeRoles('user'),
   updateContact
 );
 
@@ -340,12 +340,12 @@ router.put(
  *         description: Internal server error
  */
 router.post(
-    "/:contactId/share/:userId",
-    authorizeRoles("admin", "super-admin", "user"),
-    shareContact
-  );
-  
-  /**
+  '/:contactId/share/:userId',
+  authorizeRoles('admin', 'super-admin', 'user'),
+  shareContact
+);
+
+/**
    * @swagger
    * /contacts/{contactId}/unshare/{userId}:
    *   post:
@@ -390,12 +390,11 @@ router.post(
    *       500:
    *         description: Internal server error
    */
-  router.post(
-    "/:contactId/unshare/:userId",
-    authorizeRoles("admin", "super-admin", "user"),
-    unshareContact
-  );
-  
+router.post(
+  '/:contactId/unshare/:userId',
+  authorizeRoles('admin', 'super-admin', 'user'),
+  unshareContact
+);
 
 // router.post(
 //   "/:contactId/share/:userId",

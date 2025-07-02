@@ -1,16 +1,16 @@
-const contactService = require("../services/contactService");
+const contactService = require('../services/contactService');
 
 exports.createContact = async (req, res) => {
   try {
     const userId = req.params.userId;
     const contact = await contactService.createContact({
       ...req.body,
-      owner: userId,
+      owner: userId
     });
     res.status(201).json({
       success: true,
-      message: "Contacts created successfully!",
-      data: { contact },
+      message: 'Contacts created successfully!',
+      data: { contact }
     });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -23,8 +23,8 @@ exports.getContacts = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Contacts retrieved successfully!",
-      data: { contacts },
+      message: 'Contacts retrieved successfully!',
+      data: { contacts }
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -43,8 +43,8 @@ exports.updateContact = async (req, res) => {
     );
     res.status(200).json({
       success: true,
-      message: "Contact updated successfully",
-      data: { contact: { ...updatedContact } },
+      message: 'Contact updated successfully',
+      data: { contact: { ...updatedContact } }
     });
   } catch (error) {
     res.status(403).json({ error: error.message });
@@ -56,7 +56,7 @@ exports.deleteContact = async (req, res) => {
     await contactService.deleteContact(req.params.contactId, req.params.userId);
     res.status(200).json({
       success: true,
-      message: "Contact deleted successfully",
+      message: 'Contact deleted successfully'
     });
   } catch (error) {
     res.status(403).json({ error: error.message });
@@ -65,15 +65,15 @@ exports.deleteContact = async (req, res) => {
 
 exports.shareContact = async (req, res) => {
   try {
-    console.log('here')
+    console.log('here');
     const { contactId, userId } = req.params;
-    console.log(contactId, userId)
+    console.log(contactId, userId);
     const sharedContact = await contactService.shareContact(contactId, userId);
 
     res.status(200).json({
       success: true,
-      message: "Contact shared successfully",
-      data: sharedContact,
+      message: 'Contact shared successfully',
+      data: sharedContact
     });
   } catch (error) {
     console.log(error);
@@ -86,10 +86,10 @@ exports.unshareContact = async (req, res) => {
     const { contactId, userId } = req.params;
     const unsharedContact = await contactService.unshareContact(contactId, userId);
     res.status(200).json({
-        success: true,
-        message: "Contact unshared successfully",
-        data: unsharedContact,
-      });
+      success: true,
+      message: 'Contact unshared successfully',
+      data: unsharedContact
+    });
   } catch (error) {
     res.status(403).json({ error: error.message });
   }

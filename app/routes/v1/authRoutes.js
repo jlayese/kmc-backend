@@ -1,10 +1,10 @@
-const express = require("express");
-const authController = require("../../controllers/authController");
+const express = require('express');
+const authController = require('../../controllers/authController');
 const {
   validateSignup,
   validateSignin,
-  authenticateToken,
-} = require("../../middlewares/authMiddleware");
+  authenticateToken
+} = require('../../middlewares/authMiddleware');
 
 const router = express.Router();
 
@@ -89,7 +89,7 @@ const router = express.Router();
  *                   type: string
  *                   example: "Email already registered"
  */
-router.post("/signup", validateSignup, authController.signup);
+router.post('/signup', validateSignup, authController.signup);
 
 /**
  * @swagger
@@ -121,7 +121,7 @@ router.post("/signup", validateSignup, authController.signup);
  *       401:
  *         description: Invalid credentials
  */
-router.post("/signin", validateSignin, authController.signin);
+router.post('/signin', validateSignin, authController.signin);
 
 /**
  * @swagger
@@ -148,7 +148,7 @@ router.post("/signin", validateSignin, authController.signin);
  *       404:
  *         description: User not found
  */
-router.post("/forgot-password", authController.forgotPassword);
+router.post('/forgot-password', authController.forgotPassword);
 
 /**
  * @swagger
@@ -179,7 +179,7 @@ router.post("/forgot-password", authController.forgotPassword);
  *       400:
  *         description: Invalid or expired token
  */
-router.post("/reset-password", authController.resetPassword);
+router.post('/reset-password', authController.resetPassword);
 
 /**
  * @swagger
@@ -197,6 +197,6 @@ router.post("/reset-password", authController.resetPassword);
  *       500:
  *         description: Internal server error
  */
-router.get("/me", authenticateToken, authController.getMe);
+router.get('/me', authenticateToken, authController.getMe);
 
 module.exports = router;
